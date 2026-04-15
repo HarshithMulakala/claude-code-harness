@@ -7,10 +7,10 @@
       {
         "name": "harness",
         "source": {
-          "type": "github",
-          "repo": "HarshithMulakala/claude-code-harness"
+          "source": "url",
+          "url": "https://github.com/HarshithMulakala/claude-code-harness.git"
         },
         "description": "Structured build harness with TDD, verification, and session memory"
       }
     ]
-}
+  }
