@@ -1,0 +1,13 @@
+{
+    "name": "harness-marketplace",
+    "owner": {
+      "name": "Harshith"
+    },
+    "plugins": [
+      {
+        "name": "harness",
+        "source": ".",
+        "description": "Structured build harness with TDD, verification, and session memory"
+      }
+    ]
+  }
