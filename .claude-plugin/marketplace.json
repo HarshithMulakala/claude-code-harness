@@ -6,8 +6,11 @@
     "plugins": [
       {
         "name": "harness",
-        "source": ".",
+        "source": {
+          "type": "github",
+          "repo": "HarshithMulakala/claude-code-harness"
+        },
         "description": "Structured build harness with TDD, verification, and session memory"
       }
     ]
-  }
+}
