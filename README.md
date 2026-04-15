@@ -19,9 +19,7 @@ harness/
 │   ├── fix/SKILL.md
 │   ├── status/SKILL.md
 │   └── doctor/SKILL.md
-├── settings.json            # default permissions when the plugin is enabled
-├── extras/
-│   └── merge_harness_claude_settings.py   # optional: merge into ~/.claude/settings.json
+├── settings.json            # see note below (plugin default settings)
 └── README.md
 ```
 
@@ -55,7 +53,7 @@ The harness separates **planning** (specs and features only), **building** (one 
 
 ## Install
 
-1. **From a Git checkout or marketplace** — Add this repo as a [Claude Code plugin](https://docs.anthropic.com/en/docs/claude-code/plugins), enable **harness** for the project, then run `/reload-plugins` if needed.
+1. **From a Git checkout or marketplace** — Add this repo as a [Claude Code plugin](https://code.claude.com/docs/en/plugins), enable **harness** for the project, then run `/reload-plugins` if needed.
 
 2. **Local development** — Point Claude Code at the plugin directory:
 
@@ -65,20 +63,13 @@ The harness separates **planning** (specs and features only), **building** (one 
 
    Replace `./harness` with the path to this repository on your machine.
 
-3. **Discover / marketplace installs** — Follow [Discover and install plugins](https://docs.anthropic.com/en/discover-plugins) for the current `/plugin` flows once the plugin is published (for example after you push this repo to GitHub and add it to a marketplace).
+3. **Discover / marketplace installs** — Follow [Discover and install plugins](https://code.claude.com/docs/en/discover-plugins) for the current `/plugin` flows once the plugin is published (for example after you push this repo to GitHub and add it to a marketplace).
 
 ### Permissions and hooks shipped with the plugin
 
-- **`settings.json`** at the plugin root carries **permissions** (`allow` / `deny`) aligned with the harness skills.
-- **`hooks/hooks.json`** carries **hooks** in the layout [Claude Code expects for plugins](https://docs.anthropic.com/en/docs/claude-code/plugins) (secret-blocking **PreToolUse**, optional Prettier on save, **Stop** nudge when features remain, **SessionStart** env stamps).
+Per the [plugin structure overview](https://code.claude.com/docs/en/plugins), **`hooks/hooks.json`** at the plugin root is how event hooks ship with a plugin (here: secret-blocking **PreToolUse**, optional Prettier on save, **Stop** nudge when features remain, **SessionStart** env stamps).
 
-If you also want the same **permissions** and **hooks** in your **global** `~/.claude/settings.json` (Windows: `%USERPROFILE%\.claude\settings.json`)—for sessions where the plugin is not loaded—run:
-
-```bash
-python3 extras/merge_harness_claude_settings.py
-```
-
-(On some systems use `python` instead of `python3`.) The script unions `permissions.allow` / `permissions.deny`, merges hook blocks without duplicating identical entries, and writes a timestamped backup before saving.
+**`settings.json`** at the plugin root is the standard place for [default settings when the plugin is enabled](https://code.claude.com/docs/en/plugins). This repo includes a **`permissions`** block aligned with the harness skills. Note that the same docs currently describe plugin `settings.json` as only applying certain keys (for example `agent`); if your Claude Code build ignores unknown keys, copy the `permissions` object into project or user [settings](https://code.claude.com/docs/en/settings) yourself. You do **not** need a separate merge script or `extras/` folder for a normal plugin install—hooks come from **`hooks/hooks.json`**, not from manually editing `~/.claude/settings.json`.
 
 **Runtime notes**
 
