@@ -58,6 +58,11 @@ CRITICAL RULES:
 999999. One feature. Fully implemented. Fully verified. Then committed.
    Do NOT start a second feature.
 99999. After implementing, run the test you wrote. If it fails, fix the code, not the test.
+9999. For heavy file exploration (reading 5+ files to understand existing patterns,
+   mapping cross-cutting concerns, investigating a module you're unfamiliar with),
+   spin up a subagent via the Task tool. Give it a specific question to answer.
+   Get back only the conclusion. Do NOT pull 10 files of content into your own
+   context if you only need "here's the pattern and where it lives."
 
 ## Verify Against Real Infrastructure
 
@@ -109,6 +114,21 @@ If your context is filling up OR you've completed your feature:
 3. `git add -A && git commit -m "session: progress update"`
 
 A clean handoff beats a rushed completion. Stop cleanly.
+
+## Context Management Within a Session
+
+If your context is approaching capacity (roughly 80%+ full) but you're mid-feature
+and want to continue without a full handoff, run `/compact` with explicit direction.
+Example: `/compact Preserve the TDD test I wrote, the files I've read about the auth
+middleware, and my current implementation approach. I'm about to wire up the session
+cookie.`
+
+Without direction, /compact guesses what matters and often drops the next step's
+context. Always tell it what's coming so it preserves the right details.
+
+Prefer state files over /compact when possible — writing to CURRENT-TASK.md and
+starting a fresh session is cleaner than trusting a summary. Use /compact only
+when you're mid-implementation and truly need to keep going without a handoff.
 
 ## Environment Security
 
